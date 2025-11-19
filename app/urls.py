@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import home, detail, filter_by,place_order
+from .views import home, detail, filter_by, order
 from .filter import search
 
 app_name = 'app'
@@ -11,5 +11,5 @@ urlpatterns = [
     path('detail/<product_id>', detail, name = 'detail'),
     path('filter/<filter_type>', filter_by, name = 'filter'),
     path('search/q=', search, name = 'search'),
-    path('order/', place_order, name = 'order')
+    path('order/<int:pk>', order, name = 'order')
 ]

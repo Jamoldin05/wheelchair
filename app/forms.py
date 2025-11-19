@@ -11,18 +11,12 @@ class ProductFormsModel(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        exclude = ()
-
-    def clean(self):
-        cleaned_data = super().clean()
-        product = cleaned_data.get('product')
-        quantity = cleaned_data.get('quantity')
-
-        if product and quantity:
-            if quantity > product.stock:
-                raise forms.ValidationError(f"Available stock is {product.stock}. You cannot order {quantity}.")
-
-
+        fields = ['name', 'phone', 'quantity']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your name'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
 
 
 class CommentForm(forms.ModelForm):

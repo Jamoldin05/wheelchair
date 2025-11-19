@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category, Order
 from django.http import JsonResponse
 from .filter import filter_by
 from .forms import OrderForm
+from django.contrib import messages
+
 # from django.http import HttpResponse
 
 
@@ -38,22 +40,36 @@ def detail(request,product_id):
 
 
 
-def place_order(request):
-    orders = Order.objects.all()
+def order(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             order = form.save(commit=False)
-            product = order.product
-            product.stock -= order.quantity
-            product.save()
-            order.save()
-            return redirect('order_success') 
+            order.product = product
+
+            if order.quantity > product.stock:
+                messages.error(request, 'Dont enough quantity')
+            else:
+                product.stock -= order.quantity
+                product.save()
+                order.save()
+
+                messages.success(request, 'Order successfully sent ✅')
+
+                return redirect('app:detail', product.id)
+
     else:
         form = OrderForm()
 
     context = {
-        'form' : form
+        'form': form,
+        'product': product,
     }
 
     return render(request, 'app/detail.html', context)
+
+
+
+

@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'baton',
+    'baton.autodiscover',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +128,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+BATON = {
+    'SITE_HEADER': 'My Shop Admin',
+    'SITE_TITLE': 'Shop Admin',
+    'INDEX_TITLE': 'Dashboard'
+}

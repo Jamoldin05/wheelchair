@@ -26,27 +26,35 @@
                 </div>
                 <p class="lead">{{product.description}}</p>
                 <div class="d-flex">
-                    <form method="POST">
-                        {% csrf_token %}
+                    
+                <form method="POST" action="{% url 'app:order' %}">
+                    {% csrf_token %}
+                    
+                    <!-- product id ni yashirin yuboramiz -->
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
 
-                        <div class="form-group">
-                            <h2>Place an order</h2>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="formGroupExampleInput">NAME</label>
-                            <input type="text" class="form-control"  placeholder="Your name" >
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="formGroupExampleInput2">PHONE</label>
-                            <input type="text" class="form-control" placeholder="Your phone">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="formGroupExampleInput2">QUANTITY</label>
-                            <input type="text" class="form-control" placeholder=" Your quantity">
-                        </div>
-                        
-                        <button type="submit" class="btn btn-success">Send</button>
-                    </form>
+                    <div class="mb-3">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.phone.label_tag }}
+                        {{ form.phone }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.quantity.label_tag }}
+                        {{ form.quantity }}
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        Send
+                    </button>
+                </form>
+
+
+
                 </div>
             </div>
         </div>
@@ -92,7 +100,6 @@
             
             <form method="POST">
                 {% csrf_token %}
-                
                 <div class="form-group mb-3">
                     <label for="formGroupExampleInput">NAME</label>
                     <input type="text" class="form-control"  placeholder="Your name">

@@ -4,7 +4,7 @@ from decimal import Decimal
 
 class Datebase(models.Model):
     created_ad = models.DateTimeField(auto_now_add=True,null=True,blank=True)
-    update_ad = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    update_ad = models.DateTimeField(auto_now =True,null=True,blank=True)
 
     class Meta:
         abstract = True
