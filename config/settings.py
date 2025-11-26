@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from baton.ai import AIModels
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,8 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'baton',
-    'baton.autodiscover',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'import_export',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -131,8 +131,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-BATON = {
-    'SITE_HEADER': 'My Shop Admin',
-    'SITE_TITLE': 'Shop Admin',
-    'INDEX_TITLE': 'Dashboard'
+
+JAZZMIN_SETTINGS = {
+
+    "site_title": "Wheelchair Admin",
+
+    "site_header": "Wheelchair",
+
+    "site_brand": "Wheelchair",
+    
+    "login_logo": None,
+
+    "login_logo_dark": None,
+
+    "site_logo_classes": "img-circle",
+
+    "site_icon": None,
+
+    "welcome_sign": "Wheelchair System",
+
+    "copyright": "Wheelchair Ltd",
+
+    "search_model": ["auth.User", "auth.Group"],
+
+    "user_avatar": None,
+    
 }
+
+
+
+AUTH_USER_MODEL = 'user.CustomUser'

@@ -10,6 +10,7 @@ class Datebase(models.Model):
         abstract = True
 
 
+
 class Category(Datebase):
     title = models.CharField(max_length=255,null=True, blank=True) 
 
@@ -56,30 +57,28 @@ class Order(Datebase):
 
 
 
-class User(models.Model):
-    first_name = models.CharField(max_length=255,null=True,blank=True)
-    last_name = models.CharField(max_length=255,null=True,blank=True)
-    phone = models.CharField(max_length=20, unique=True, null=True, blank=True)
-    email = models.EmailField(null=True,blank=True)
-
-
-    @property
-    def full_name(self):
-        return f"{self.first_name} {self.last_name}"
-
-    
-
 
 
 class Comment(Datebase):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)   
-    product = models.ForeignKey(Product, on_delete=models.CASCADE) 
-    text = models.TextField(null=True,blank=True)                                      
-    rating = models.IntegerField(default=5)
-      
+    class RatingChoices(models.IntegerChoices):
+        ONE = 1, "⭐ 1"
+        TWO = 2, "⭐⭐ 2"
+        THREE = 3, "⭐⭐⭐ 3"
+        FOUR = 4, "⭐⭐⭐⭐ 4"
+        FIVE = 5, "⭐⭐⭐⭐⭐ 5"
+    
+    name = models.CharField(max_length=255)
+    email = models.EmailField(null=True, blank=True)
+    message = models.TextField(null=True)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='comments')
+    image = models.ImageField(upload_to='comments/%Y/%m/%d/',null=True,blank=True)
+    rating = models.PositiveSmallIntegerField(choices=RatingChoices.choices,default = RatingChoices.FIVE)
+    is_handle = models.BooleanField(default=False)
+    
+    
+
 
     def __str__(self):
-        return f"{self.user.full_name} - {self.product.name}"
-
+        return f'{self.name} - {self.message}'
 
 

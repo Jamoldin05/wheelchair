@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category, Order
+from .models import Product, Category, Comment
 from django.http import JsonResponse
 from .filter import filter_by
 from .forms import OrderForm
 from django.contrib import messages
+from django.db.models import Avg
 
 # from django.http import HttpResponse
 
@@ -28,14 +29,20 @@ def home(request,category_id = None):
 
 
 
+
 def detail(request,product_id):
     product = Product.objects.get(id = product_id)
-    if not product_id:
-        return JsonResponse(data={'massage': 'Ooops page not found (:','status_code':404})
+    comments = product.comments.filter(is_handle=False)[:4]
+    related_products = Product.objects.filter(
+    category=product.category
+).exclude(id=product.id).order_by('-created_ad')[:4]
     context = {
-        'product' : product
+        'product' : product,
+        'comments' : comments,
+        'related_products' : related_products
     }
     return render(request,'app/detail.html',context)
+
 
 
 

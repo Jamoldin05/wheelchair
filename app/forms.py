@@ -8,15 +8,16 @@ class ProductFormsModel(forms.ModelForm):
         exclude = ()
 
 
+
+
+
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['name', 'phone', 'quantity']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your name'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}),
-            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
-        }
+        exclude = ()
+
+
+
 
 
 class CommentForm(forms.ModelForm):

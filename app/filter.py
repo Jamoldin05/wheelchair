@@ -3,6 +3,7 @@ from .models import Product
 from django.shortcuts import render
 
 
+
 def filter_by(request,filter_type):
 
     products = Product.objects.all()
@@ -11,6 +12,10 @@ def filter_by(request,filter_type):
         products = products.order_by('-price')
     elif filter_type == 'cheap':
         products = products.order_by('price')
+    elif filter_type == 'sale':
+        products = products.filter(discount__gt = 0).order_by('-discount')
+    else:
+        products = products.order_by('created_ad')
 
     context = {
         'products' : products
