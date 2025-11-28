@@ -51,6 +51,20 @@
                             Search
                         </button>
                     </form>
+                    {% if user.is_authenticated %}
+                        <div>
+                            <form method="post" action="{% url 'user:logout_page' %}">
+                                {%csrf_token%}
+                                <button type="submit" class="btn btn-primary ms-4 ">Logout</button>
+                            </form>
+                        </div>
+                    {%else%}
+                        <div>
+                            <a href="{% url 'user:login_page' %}">
+                                <button type="button" class="btn btn-primary ms-4 ">Login</button>
+                            </a>
+                        </div>
+                    {%endif%}
                 </div>
             </div>
         </nav>
